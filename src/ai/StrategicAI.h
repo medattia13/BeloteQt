@@ -1,0 +1,4 @@
+class StrategicAI : public PlayerAI
+{
+    ...
+};
