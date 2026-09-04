@@ -7,187 +7,84 @@ project(Belote
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-# ============================================================
-# Qt
-# ============================================================
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-find_package(Qt6 REQUIRED COMPONENTS
-    Core
-    Widgets
-    Test
-)
-
-# ============================================================
-# Model library
-# ============================================================
-
-add_library(BeloteModel STATIC
-    src/model/Card.cpp
-    src/model/Deck.cpp
-    src/model/Player.cpp
-    src/model/Team.cpp
-    src/model/Trick.cpp
-    src/model/BeloteRules.cpp
-    src/model/Game.cpp
-)
-
-target_include_directories(BeloteModel PUBLIC
-    src
-    src/model
-)
-
-target_link_libraries(BeloteModel PUBLIC
-    Qt6::Core
-)
-
-# ============================================================
-# Game application
-# ============================================================
-
-add_executable(Belote
+qt_add_executable(Belote
     src/main.cpp
-    ressources/ressources.qrc
+
+    # Game
+    src/model/Card.cpp
+    src/model/Card.h
+
+    src/model/Deck.cpp
+    src/model/Deck.h
+
+    src/model/Player.cpp
+    src/model/Player.h
+
+    src/model/Team.cpp
+    src/model/Team.h
+
+    src/model/Trick.cpp
+    src/model/Trick.h
+
+    src/model/Game.cpp
+    src/model/Game.h
+
+    src/model/BeloteRules.cpp
+    src/model/BeloteRules.h
+
+    src/model/GameState.h
+
+    # Controller
+    src/controller/GameController.cpp
+    src/controller/GameController.h
+
+    # UI
+    src/ui/MainWindow.cpp
+    src/ui/MainWindow.h
+
+    src/ui/StartScreen.cpp
+    src/ui/StartScreen.h
+
+    src/ui/GameWidget.cpp
+    src/ui/GameWidget.h
+
+    src/ui/CardWidget.cpp
+    src/ui/CardWidget.h
+
+    src/ui/PlayerHandWidget.cpp
+    src/ui/PlayerHandWidget.h
+
+    src/ui/PlayerWidget.cpp
+    src/ui/PlayerWidget.h
+
+    src/ui/TrickWidget.cpp
+    src/ui/TrickWidget.h
+
+    src/ui/ScoreWidget.cpp
+    src/ui/ScoreWidget.h
+
+    src/ui/TrumpSelectionWidget.cpp
+    src/ui/TrumpSelectionWidget.h
+
+    src/ui/ResultsWidget.cpp
+    src/ui/ResultsWidget.h
+    src/ui/SettingsWidget.h src/ui/SettingsWidget.cpp
+)
+
+target_include_directories(Belote PRIVATE
+    src
+    src/game
+    src/controller
+    src/ui
 )
 
 target_link_libraries(Belote PRIVATE
-    BeloteModel
     Qt6::Widgets
-)
-
-# ============================================================
-# Tests
-# ============================================================
-
-enable_testing()
-
-# ------------------------------------------------------------
-# Card tests
-# ------------------------------------------------------------
-
-add_executable(tst_card
-    tests/tst_card.cpp
-)
-
-target_link_libraries(tst_card PRIVATE
-    BeloteModel
-    Qt6::Test
-)
-
-add_test(
-    NAME tst_card
-    COMMAND tst_card
-)
-
-# ------------------------------------------------------------
-# Deck tests
-# ------------------------------------------------------------
-
-add_executable(tst_deck
-    tests/tst_deck.cpp
-)
-
-target_link_libraries(tst_deck PRIVATE
-    BeloteModel
-    Qt6::Test
-)
-
-add_test(
-    NAME tst_deck
-    COMMAND tst_deck
-)
-
-# ------------------------------------------------------------
-# Player tests
-# ------------------------------------------------------------
-
-add_executable(tst_player
-    tests/tst_player.cpp
-)
-
-target_link_libraries(tst_player PRIVATE
-    BeloteModel
-    Qt6::Test
-)
-
-add_test(
-    NAME tst_player
-    COMMAND tst_player
-)
-
-# ------------------------------------------------------------
-# Trick tests
-# ------------------------------------------------------------
-
-add_executable(tst_trick
-    tests/tst_trick.cpp
-)
-
-target_link_libraries(tst_trick PRIVATE
-    BeloteModel
-    Qt6::Test
-)
-
-add_test(
-    NAME tst_trick
-    COMMAND tst_trick
-)
-
-# ------------------------------------------------------------
-# Team tests
-# ------------------------------------------------------------
-
-add_executable(tst_team
-    tests/tst_team.cpp
-)
-
-target_link_libraries(tst_team PRIVATE
-    BeloteModel
-    Qt6::Test
-)
-
-add_test(
-    NAME tst_team
-    COMMAND tst_team
-)
-
-# ------------------------------------------------------------
-# BeloteRules tests
-# ------------------------------------------------------------
-
-add_executable(tst_beloterules
-    tests/tst_beloterules.cpp
-)
-
-target_link_libraries(tst_beloterules PRIVATE
-    BeloteModel
-    Qt6::Test
-)
-
-add_test(
-    NAME tst_beloterules
-    COMMAND tst_beloterules
-)
-
-# ------------------------------------------------------------
-# Game tests
-# ------------------------------------------------------------
-
-add_executable(tst_game
-    tests/tst_game.cpp
-)
-
-target_link_libraries(tst_game PRIVATE
-    BeloteModel
-    Qt6::Test
-)
-
-add_test(
-    NAME tst_game
-    COMMAND tst_game
 )

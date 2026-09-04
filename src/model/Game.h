@@ -35,11 +35,12 @@ public:
     const Team& team1() const;
     const Team& team2() const;
 
-    Suit trump() const;
-
+    //Suit trump() const;
+std::optional<Suit> trump() const;
     int roundScoreTeam1() const;
     int roundScoreTeam2() const;
-
+    Player& player(int index);
+    const Player& player(int index) const;
 private:
     void finishRound();
     void scoreRound();

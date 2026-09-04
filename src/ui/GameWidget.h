@@ -1,22 +1,42 @@
-┌─────────────────────────────────────────────┐
-│ Team 1: 87                         Team 2: 65│
-│                                             │
-│                  Player 2                   │
-│                 [K♥] [9♣]                  │
-│                                             │
-│                                             │
-│        [10♠]        [A♥]        [7♥]       │
-│                                             │
-│                                             │
-│                  YOU                        │
-│                                             │
-│ [7♣] [8♣] [J♦] [Q♦] [K♠] [A♠] [9♥] [10♥] │
-│                                             │
-└─────────────────────────────────────────────┘
-You could use a QGraphicsView/QGraphicsScene for this.
+#ifndef GAMEWIDGET_H
+#define GAMEWIDGET_H
 
-For a card game, I actually recommend:
+#include <QWidget>
 
-QGraphicsView + QGraphicsScene
+#include "model/Card.h"
 
-rather than trying to construct the whole table with hundreds of QPushButtons.
+class GameController;
+class PlayerWidget;
+class TrickWidget;
+class ScoreWidget;
+
+class GameWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit GameWidget(GameController* controller,
+                        QWidget* parent = nullptr);
+
+public slots:
+    void updateGame();
+    void cardPlayed(int playerId, int cardIndex);
+    void showTrumpSelection();
+
+signals:
+    void cardClicked(int cardIndex);
+    void trumpSelected(Suit suit);
+
+private:
+    void setupUi();
+    void setupConnections();
+    void refresh();
+    GameController* m_controller;
+
+    PlayerWidget* m_players[4];
+
+    TrickWidget* m_trickWidget;
+    ScoreWidget* m_scoreWidget;
+};
+
+#endif // GAMEWIDGET_H

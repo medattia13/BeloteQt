@@ -71,6 +71,16 @@ void Game::startRound()
         }
     }
 }
+Player& Game::player(int index)
+{
+    return m_players.at(index);
+}
+
+const Player& Game::player(int index) const
+{
+    return m_players.at(index);
+}
+
 
 bool Game::playCard(int playerId, int cardIndex)
 {
@@ -336,7 +346,7 @@ const Team& Game::team2() const
 {
     return m_team2;
 }
-
+/*
 Suit Game::trump() const
 {
     if (m_trump.has_value()) {
@@ -344,6 +354,10 @@ Suit Game::trump() const
     }
 
     return Suit::Hearts;
+}*/
+std::optional<Suit> Game::trump() const
+{
+    return m_trump;
 }
 
 int Game::roundScoreTeam1() const
